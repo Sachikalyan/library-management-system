@@ -1,5 +1,7 @@
 # 📚 Simple Library Management System (Core Java)
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new)
+
 A beginner-friendly, clean, and interactive console-based Library Management System designed specifically for **1st-year computer science/engineering students**.
 
 ---
@@ -30,9 +32,11 @@ A beginner-friendly, clean, and interactive console-based Library Management Sys
 ```text
 LibraryManagementSystem/
 │
+├── .devcontainer/  # Enables 1-click cloud running via GitHub Codespaces
 ├── Book.java       # Represents a Book entity (data & getters/setters)
 ├── Library.java    # Manages the list of books & operations (add, view, issue, return, search)
 ├── Main.java       # User interface (Menu-driven console using Scanner)
+├── .gitignore      # Ignores compiled .class files and IDE files
 └── README.md       # Documentation and running guide
 ```
 
@@ -40,8 +44,22 @@ LibraryManagementSystem/
 
 ## 🚀 How to Run the Project
 
-### Option A: Using Command Prompt / PowerShell / Terminal
-1. Open your terminal and navigate to the project directory:
+### Option A: Run Online via GitHub Codespaces (No Installation Required!)
+1. Click the **Open in GitHub Codespaces** badge at the top of the repository (or go to **Code > Codespaces > Create codespace**).
+2. GitHub will launch an online VS Code environment in your browser with Java already configured.
+3. Open the terminal and type:
+   ```bash
+   javac *.java
+   java Main
+   ```
+
+### Option B: Using an IDE (VS Code, IntelliJ IDEA, Eclipse)
+1. Clone or open the `LibraryManagementSystem` folder in your IDE.
+2. Open `Main.java`.
+3. Click the **Run ▶️** button.
+
+### Option C: Using Local Command Prompt / PowerShell
+1. Open terminal in the project directory:
    ```cmd
    cd "C:\Users\sachi\.gemini\antigravity\scratch\LibraryManagementSystem"
    ```
@@ -53,11 +71,6 @@ LibraryManagementSystem/
    ```cmd
    java Main
    ```
-
-### Option B: Using an IDE (VS Code, IntelliJ IDEA, Eclipse, NetBeans)
-1. Open the `LibraryManagementSystem` folder in your IDE.
-2. Open `Main.java`.
-3. Click the **Run** or **Play ▶️** button.
 
 ---
 
