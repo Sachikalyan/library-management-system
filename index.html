@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Library Management System</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--muted);
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            color: var(--muted);
+        }
+
+        input {
+            width: 100%;
+            padding: 0.625rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            ring: 2px solid var(--primary);
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.65rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-issue {
+            background: #d97706;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-issue:hover {
+            background: #b45309;
+        }
+
+        .btn-return {
+            background: var(--success);
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-return:hover {
+            background: #15803d;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.92rem;
+        }
+
+        th {
+            background: #f1f5f9;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-available {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .badge-issued {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .alert {
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+
+        .alert-danger {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Library Management System</h1>
+            <p>1st Year Java Project Live Web Preview (Hostable on GitHub Pages)</p>
+        </header>
+
+        <div id="alertBox" class="alert"></div>
+
+        <div class="grid-2">
+            <!-- Add Book Form -->
+            <div class="card">
+                <h2>➕ Add New Book</h2>
+                <form id="addBookForm">
+                    <div class="form-group">
+                        <label for="bookId">Book ID</label>
+                        <input type="number" id="bookId" placeholder="e.g. 105" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookTitle">Title</label>
+                        <input type="text" id="bookTitle" placeholder="e.g. Java Concurrency in Practice" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor">Author</label>
+                        <input type="text" id="bookAuthor" placeholder="e.g. Brian Goetz" required>
+                    </div>
+                    <button type="submit">Add Book</button>
+                </form>
+            </div>
+
+            <!-- Search Books -->
+            <div class="card">
+                <h2>🔍 Search Books</h2>
+                <div class="form-group">
+                    <label for="searchInput">Search by ID, Title, or Author</label>
+                    <input type="text" id="searchInput" placeholder="Type keyword to filter...">
+                </div>
+                <p style="font-size: 0.85rem; color: var(--muted); margin-top: 1rem;">
+                    💡 This web preview runs alongside your <strong>Java Console Application</strong>. When uploaded to GitHub, this page can be hosted 100% free with GitHub Pages!
+                </p>
+            </div>
+        </div>
+
+        <!-- Book List -->
+        <div class="card">
+            <h2>📖 Books in Library (<span id="totalBooks">0</span>)</h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const initialBooks = [
+            { id: 101, title: "Java: The Complete Reference", author: "Herbert Schildt", isIssued: false },
+            { id: 102, title: "Head First Java", author: "Kathy Sierra", isIssued: false },
+            { id: 103, title: "Clean Code", author: "Robert C. Martin", isIssued: false },
+            { id: 104, title: "Data Structures and Algorithms", author: "Mark Allen Weiss", isIssued: false }
+        ];
+
+        let books = JSON.parse(localStorage.getItem("library_books")) || initialBooks;
+
+        function saveBooks() {
+            localStorage.setItem("library_books", JSON.stringify(books));
+        }
+
+        function showAlert(msg, isSuccess = true) {
+            const alert = document.getElementById("alertBox");
+            alert.className = "alert " + (isSuccess ? "alert-success" : "alert-danger");
+            alert.textContent = msg;
+            alert.style.display = "block";
+            setTimeout(() => { alert.style.display = "none"; }, 3500);
+        }
+
+        function renderBooks(filter = "") {
+            const tbody = document.getElementById("bookTableBody");
+            tbody.innerHTML = "";
+
+            const filtered = books.filter(b => 
+                String(b.id).includes(filter) ||
+                b.title.toLowerCase().includes(filter.toLowerCase()) ||
+                b.author.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            document.getElementById("totalBooks").textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--muted);">No books found.</td></tr>`;
+                return;
+            }
+
+            filtered.forEach(book => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td><strong>#${book.id}</strong></td>
+                    <td>${book.title}</td>
+                    <td>${book.author}</td>
+                    <td>
+                        <span class="badge ${book.isIssued ? 'badge-issued' : 'badge-available'}">
+                            ${book.isIssued ? 'Issued' : 'Available'}
+                        </span>
+                    </td>
+                    <td>
+                        ${book.isIssued ? 
+                            `<button class="btn-return" onclick="toggleIssue(${book.id})">Return</button>` : 
+                            `<button class="btn-issue" onclick="toggleIssue(${book.id})">Issue</button>`
+                        }
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function toggleIssue(id) {
+            const book = books.find(b => b.id === id);
+            if (!book) return;
+            book.isIssued = !book.isIssued;
+            saveBooks();
+            renderBooks(document.getElementById("searchInput").value);
+            showAlert(`Book "${book.title}" marked as ${book.isIssued ? 'Issued' : 'Returned'}!`);
+        }
+
+        document.getElementById("addBookForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const id = parseInt(document.getElementById("bookId").value.trim());
+            const title = document.getElementById("bookTitle").value.trim();
+            const author = document.getElementById("bookAuthor").value.trim();
+
+            if (books.some(b => b.id === id)) {
+                showAlert(`A book with ID #${id} already exists!`, false);
+                return;
+            }
+
+            books.push({ id, title, author, isIssued: false });
+            saveBooks();
+            renderBooks();
+            showAlert(`"${title}" successfully added to the library!`);
+            e.target.reset();
+        });
+
+        document.getElementById("searchInput").addEventListener("input", (e) => {
+            renderBooks(e.target.value.trim());
+        });
+
+        renderBooks();
+    </script>
+</body>
+</html>
