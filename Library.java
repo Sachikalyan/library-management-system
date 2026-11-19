@@ -21,20 +21,26 @@ public class Library {
         books.add(new Book(104, "Data Structures and Algorithms", "Mark Allen Weiss"));
     }
 
+    // Get all books list (used by Server & UI)
+    public ArrayList<Book> getBooks() {
+        return books;
+    }
+
     // 1. Add a new book
-    public void addBook(Book newBook) {
+    public boolean addBook(Book newBook) {
         // Prevent duplicate IDs
         for (Book b : books) {
             if (b.getId() == newBook.getId()) {
                 System.out.println("❌ Error: A book with ID " + newBook.getId() + " already exists!");
-                return;
+                return false;
             }
         }
         books.add(newBook);
         System.out.println("✅ Book added successfully: " + newBook.getTitle());
+        return true;
     }
 
-    // 2. View all books
+    // 2. View all books (Console table format)
     public void viewAllBooks() {
         if (books.isEmpty()) {
             System.out.println("No books available in the library.");
@@ -76,41 +82,45 @@ public class Library {
     }
 
     // 4. Issue a book
-    public void issueBook(int bookId) {
+    public boolean issueBook(int bookId) {
         Book book = findBookById(bookId);
 
         if (book == null) {
             System.out.println("❌ Book with ID " + bookId + " does not exist.");
-            return;
+            return false;
         }
 
         if (book.isIssued()) {
             System.out.println("⚠️ Sorry! The book '" + book.getTitle() + "' is already issued.");
+            return false;
         } else {
             book.setIssued(true);
             System.out.println("✅ Success! Book '" + book.getTitle() + "' has been issued.");
+            return true;
         }
     }
 
     // 5. Return a book
-    public void returnBook(int bookId) {
+    public boolean returnBook(int bookId) {
         Book book = findBookById(bookId);
 
         if (book == null) {
             System.out.println("❌ Book with ID " + bookId + " does not exist.");
-            return;
+            return false;
         }
 
         if (!book.isIssued()) {
             System.out.println("⚠️ This book was never issued. It is already available in the library.");
+            return false;
         } else {
             book.setIssued(false);
             System.out.println("✅ Success! Book '" + book.getTitle() + "' has been returned.");
+            return true;
         }
     }
 
     // Helper method to look up a book by ID
-    private Book findBookById(int id) {
+    public Book findBookById(int id) {
         for (Book b : books) {
             if (b.getId() == id) {
                 return b;
